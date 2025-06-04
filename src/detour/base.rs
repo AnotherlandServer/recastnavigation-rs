@@ -16,9 +16,11 @@ pub(crate) mod ffi {
         include!("recastnavigation-rs/src/detour/detour-ffi.h");
 
         type dtStatus = crate::detour::base::DtStatus;
+        type dtAllocHint = crate::detour::base::DtAllocHint;
 
         type c_void;
         unsafe fn dtFree(ptr: *mut c_void);
+        unsafe fn dtAlloc(size: usize, hint: dtAllocHint) -> *mut c_void;
     }
 }
 
@@ -52,6 +54,14 @@ impl DtStatus {
             return Err(RNError::Failed);
         }
     }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub struct DtAllocHint(pub u32);
+
+unsafe impl ExternType for DtAllocHint {
+    type Id = type_id!("dtAllocHint");
+    type Kind = cxx::kind::Trivial;
 }
 
 const DT_FAILURE: u32 = 1 << 31;
@@ -92,6 +102,20 @@ impl DtBuf {
     #[inline]
     pub(crate) fn from_raw(data: *mut u8, size: i32) -> DtBuf {
         DtBuf { data, size }
+    }
+
+    pub fn copy(data: &[u8]) -> RNResult<DtBuf> {
+        let size = data.len() as i32;
+        let data = if size > 0 {
+            unsafe { 
+                let buf = ffi::dtAlloc(data.len(), DtAllocHint(0));
+                std::ptr::copy_nonoverlapping(data.as_ptr(), buf as *mut u8, size as usize);
+                buf as *mut u8
+            }
+        } else {
+            std::ptr::null_mut()
+        };
+        Ok(DtBuf { data, size })
     }
 
     #[inline]
