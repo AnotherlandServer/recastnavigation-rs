@@ -147,6 +147,7 @@ pub(crate) mod ffi {
 
 pub type CrowdAgentState = ffi::CrowdAgentState;
 pub type MoveRequestState = ffi::MoveRequestState;
+pub type UpdateFlags = ffi::UpdateFlags;
 
 #[repr(C)]
 #[derive(Debug, Default, Clone, Copy)]
