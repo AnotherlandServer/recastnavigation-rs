@@ -7,6 +7,7 @@ use crate::detour::{DtNavMesh, DtPolyRef, DtQueryFilter};
 use crate::detour_crowd::local_boundary::DtLocalBoundary;
 use crate::detour_crowd::obstacle_avoidance::DtObstacleAvoidanceParams;
 use crate::detour_crowd::path_corridor::DtPathCorridor;
+use crate::{RNError, RNResult};
 
 pub const DT_CROWDAGENT_MAX_NEIGHBOURS: i32 = 6;
 pub const DT_CROWDAGENT_MAX_CORNERS: i32 = 4;
@@ -592,8 +593,13 @@ impl DtCrowd {
     }
 
     #[inline]
-    pub fn init(&mut self, max_agents: i32, max_agent_radius: f32, nav: &mut DtNavMesh) -> bool {
-        return unsafe { self.inner_mut().init(max_agents, max_agent_radius, nav.as_mut_ptr()) };
+    pub fn init(&mut self, max_agents: i32, max_agent_radius: f32, nav: &mut DtNavMesh) -> RNResult<()> {
+        let res = unsafe { self.inner_mut().init(max_agents, max_agent_radius, nav.as_mut_ptr()) };
+        if res {
+            Ok(())
+        } else {
+            Err(RNError::Failed)
+        }
     }
 
     #[inline]
@@ -636,18 +642,33 @@ impl DtCrowd {
     }
 
     #[inline]
-    pub fn request_move_target(&mut self, idx: i32, re: DtPolyRef, pos: &[f32; 3]) -> bool {
-        return unsafe { self.inner_mut().requestMoveTarget(idx, re, pos as *const _) };
+    pub fn request_move_target(&mut self, idx: i32, re: DtPolyRef, pos: &[f32; 3]) -> RNResult<()> {
+        let res = unsafe { self.inner_mut().requestMoveTarget(idx, re, pos as *const _) };
+        if res {
+            Ok(())
+        } else {
+            Err(RNError::Failed)
+        }
     }
 
     #[inline]
-    pub fn request_move_velocity(&mut self, idx: i32, vel: &[f32; 3]) -> bool {
-        return unsafe { self.inner_mut().requestMoveVelocity(idx, vel as *const _) };
+    pub fn request_move_velocity(&mut self, idx: i32, vel: &[f32; 3]) -> RNResult<()> {
+        let res = unsafe { self.inner_mut().requestMoveVelocity(idx, vel as *const _) };
+        if res {
+            Ok(())
+        } else {
+            Err(RNError::Failed)
+        }
     }
 
     #[inline]
-    pub fn reset_move_target(&mut self, idx: i32) -> bool {
-        return self.inner_mut().resetMoveTarget(idx);
+    pub fn reset_move_target(&mut self, idx: i32) -> RNResult<()> {
+        let res= self.inner_mut().resetMoveTarget(idx);
+        if res {
+            Ok(())
+        } else {
+            Err(RNError::Failed)
+        }
     }
 
     #[inline]
