@@ -14,16 +14,16 @@ pub(crate) mod ffi {
 #[repr(C)]
 #[derive(Debug, Default, Clone)]
 pub struct DtObstacleAvoidanceParams {
-    pub el_bias: f32,
-    pub eight_des_vel: f32,
-    pub eight_cur_vel: f32,
-    pub eight_side: f32,
-    pub eight_toi: f32,
-    pub oriz_time: f32,
-    pub rid_size: u8,
-    pub daptive_divs: u8,
-    pub daptive_rings: u8,
-    pub daptive_depth: u8,
+    pub vel_bias: f32,
+    pub weight_des_vel: f32,
+    pub weight_cur_vel: f32,
+    pub weight_side: f32,
+    pub weight_toi: f32,
+    pub horiz_time: f32,
+    pub grid_size: u8,
+    pub adaptive_divs: u8,
+    pub adaptive_rings: u8,
+    pub adaptive_depth: u8,
 }
 
 unsafe impl ExternType for DtObstacleAvoidanceParams {
