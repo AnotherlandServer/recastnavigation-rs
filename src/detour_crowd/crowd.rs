@@ -2,6 +2,7 @@ use cxx::{type_id, ExternType};
 use static_assertions::const_assert_eq;
 use std::fmt::{self, Debug, Formatter};
 use std::pin::Pin;
+use std::ptr;
 
 use crate::detour::{DtNavMesh, DtPolyRef, DtQueryFilter};
 use crate::detour_crowd::local_boundary::DtLocalBoundary;
@@ -680,8 +681,13 @@ impl DtCrowd {
     }
 
     #[inline]
-    pub fn update(&mut self, dt: f32, debug: &mut DtCrowdAgentDebugInfo) {
-        unsafe { self.inner_mut().update(dt, debug) };
+    pub fn update(&mut self, dt: f32, debug: Option<&mut DtCrowdAgentDebugInfo>) {
+        unsafe { 
+            self.inner_mut().update(dt, debug
+                .map(|d| d as *mut _)
+                .unwrap_or(ptr::null_mut())
+            ) 
+        };
     }
 
     #[inline]
