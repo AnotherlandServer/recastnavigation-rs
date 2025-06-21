@@ -113,6 +113,12 @@ unsafe impl ExternType for CxxDtPathCorridor {
 
 pub struct DtPathCorridor(CxxDtPathCorridor);
 
+impl Default for DtPathCorridor {
+    fn default() -> Self {
+        return DtPathCorridor(CxxDtPathCorridor([0; 40]));
+    }
+}
+
 impl Debug for DtPathCorridor {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         return f
