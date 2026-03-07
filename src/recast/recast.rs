@@ -332,7 +332,7 @@ pub(crate) mod ffi {
         ) -> bool;
         unsafe fn rcMergePolyMeshes(
             ctx: *mut rcContext,
-            meshes: *const *const rcPolyMesh,
+            meshes: *mut *mut rcPolyMesh,
             nmeshes: i32,
             mesh: Pin<&mut rcPolyMesh>,
         ) -> bool;
@@ -347,7 +347,7 @@ pub(crate) mod ffi {
         unsafe fn rcCopyPolyMesh(ctx: *mut rcContext, src: &rcPolyMesh, dst: Pin<&mut rcPolyMesh>) -> bool;
         unsafe fn rcMergePolyMeshDetails(
             ctx: *mut rcContext,
-            meshes: *const *const rcPolyMeshDetail,
+            meshes: *mut *mut rcPolyMeshDetail,
             nmeshes: i32,
             mesh: Pin<&mut rcPolyMeshDetail>,
         ) -> bool;
@@ -2246,12 +2246,12 @@ pub fn rc_build_poly_mesh(
 pub fn rc_merge_poly_meshes(context: &mut RcContext, meshes: &[&RcPolyMesh], mesh: &mut RcPolyMesh) -> bool {
     let tmp_meshes: Vec<_> = meshes.iter().map(|m| m.as_ptr()).collect();
     unsafe {
-        return ffi::rcMergePolyMeshes(
+        ffi::rcMergePolyMeshes(
             context.0.pin_mut().get_unchecked_mut() as *mut _,
-            tmp_meshes.as_ptr(),
+            tmp_meshes.as_ptr() as *mut *mut ffi::rcPolyMesh,
             meshes.len() as i32,
             mesh.inner_mut(),
-        );
+        )
     }
 }
 
@@ -2305,11 +2305,11 @@ pub fn rc_merge_poly_mesh_details(
 ) -> bool {
     let tmp_meshes: Vec<_> = meshes.iter().map(|m| m.as_ptr()).collect();
     unsafe {
-        return ffi::rcMergePolyMeshDetails(
+        ffi::rcMergePolyMeshDetails(
             context.0.pin_mut().get_unchecked_mut() as *mut _,
-            tmp_meshes.as_ptr(),
+            tmp_meshes.as_ptr() as *mut *mut ffi::rcPolyMeshDetail,
             meshes.len() as i32,
             mesh.inner_mut(),
-        );
+        )
     }
 }

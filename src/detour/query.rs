@@ -271,7 +271,7 @@ pub(crate) mod ffi {
         pub unsafe fn dtnmq_findRandomPoint(
             query: &dtNavMeshQuery,
             filter: *const dtQueryFilter,
-            frand: unsafe extern "C" fn() -> f32,
+            frand: fn() -> f32,
             randomRef: *mut dtPolyRef,
             randomPt: *mut f32,
         ) -> dtStatus;
@@ -281,7 +281,7 @@ pub(crate) mod ffi {
             centerPos: *const f32,
             maxRadius: f32,
             filter: *const dtQueryFilter,
-            frand: unsafe extern "C" fn() -> f32,
+            frand: fn() -> f32,
             randomRef: *mut dtPolyRef,
             randomPt: *mut f32,
         ) -> dtStatus;

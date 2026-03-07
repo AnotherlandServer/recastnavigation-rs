@@ -14,16 +14,11 @@ fn main() {
         "src/detour_crowd/path_corridor.rs",
         "src/detour_crowd/obstacle_avoidance.rs",
         "src/detour_crowd/crowd.rs",
-        "src/demo/demo.rs",
     ])
-    .flag_if_supported("-std=c++14")
-    .flag_if_supported("/fp:precise")
-    .flag_if_supported("-ffp-model=precise")
-    .flag_if_supported("-ffp-contract=off")
+    .flag_if_supported("/fp:fast")
+    .flag_if_supported("-ffp-model=fast")
     .define("_CRT_SECURE_NO_WARNINGS", "1")
     .define("IS_ARCH_64", if is_arch_64 { "1" } else { "0" })
-    .include("./recastnavigation/Deterministic/Include")
-    .files(list_cpp_files("./recastnavigation/Deterministic/Source"))
     .include("./recastnavigation/Recast/Include")
     .files(list_cpp_files("./recastnavigation/Recast/Source"))
     .include("./recastnavigation/Detour/Include")
@@ -31,11 +26,6 @@ fn main() {
     .include("./recastnavigation/DetourCrowd/Include")
     .files(list_cpp_files("./recastnavigation/DetourCrowd/Source"))
     .include("./recastnavigation/RecastDemo/Include")
-    .files([
-        "./recastnavigation/RecastDemo/Source/MeshLoaderObj.cpp",
-        "./recastnavigation/RecastDemo/Source/ChunkyTriMesh.cpp",
-    ])
-    .files(["./src/demo/demo-ffi.cpp"])
     .compile("recastnavigation");
 
     println!("cargo:rerun-if-changed=src/utils.h");
@@ -54,10 +44,6 @@ fn main() {
     println!("cargo:rerun-if-changed=src/detour_crowd/obstacle_avoidance.rs");
     println!("cargo:rerun-if-changed=src/detour_crowd/crowd.rs");
     println!("cargo:rerun-if-changed=src/detour_crowd/crowd-ffi.h");
-
-    println!("cargo:rerun-if-changed=src/demo/demo.rs");
-    println!("cargo:rerun-if-changed=src/demo/demo-ffi.h");
-    println!("cargo:rerun-if-changed=src/demo/demo-ffi.cpp");
 }
 
 fn list_cpp_files<P: AsRef<Path>>(dir: P) -> Vec<String> {

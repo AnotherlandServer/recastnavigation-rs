@@ -24,7 +24,7 @@ pub(crate) mod ffi {
             filter: *const dtQueryFilter,
         );
         unsafe fn dtlb_isValid(
-            lb: &dtLocalBoundary,
+            lb: Pin<&mut dtLocalBoundary>,
             navquery: *mut dtNavMeshQuery,
             filter: *const dtQueryFilter,
         ) -> bool;
@@ -92,8 +92,8 @@ impl DtLocalBoundary {
     }
 
     #[inline]
-    pub fn is_valid(&self, navquery: &mut DtNavMeshQuery, filter: &DtQueryFilter) -> bool {
-        return unsafe { ffi::dtlb_isValid(self.inner(), navquery.as_mut_ptr(), filter) };
+    pub fn is_valid(&mut self, navquery: &mut DtNavMeshQuery, filter: &DtQueryFilter) -> bool {
+        return unsafe { ffi::dtlb_isValid(self.inner_mut(), navquery.as_mut_ptr(), filter) };
     }
 
     #[inline]

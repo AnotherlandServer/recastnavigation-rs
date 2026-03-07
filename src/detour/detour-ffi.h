@@ -80,12 +80,20 @@ inline float dtqf_getCost(const dtQueryFilter& filter, const float* pa, const fl
 // dtNavMeshQuery
 //
 
+static thread_local rust::Fn<float()>* _tl_frand = nullptr;
+
+static float _frand_trampoline() {
+    return (*_tl_frand)();
+}
+
 inline dtStatus dtnmq_findRandomPoint(const dtNavMeshQuery& query,
     const dtQueryFilter* filter, rust::Fn<float()> frand, dtPolyRef* randomRef, float* randomPt) {
-    return query.findRandomPoint(filter, frand, randomRef, randomPt);
+    _tl_frand = &frand;
+    return query.findRandomPoint(filter, _frand_trampoline, randomRef, randomPt);
 }
 
 inline dtStatus dtnmq_findRandomPointAroundCircle(const dtNavMeshQuery& query, dtPolyRef startRef, const float* centerPos,
     const float maxRadius, const dtQueryFilter* filter, rust::Fn<float()> frand, dtPolyRef* randomRef, float* randomPt) {
-    return query.findRandomPointAroundCircle(startRef, centerPos, maxRadius, filter, frand, randomRef, randomPt);
+    _tl_frand = &frand;
+    return query.findRandomPointAroundCircle(startRef, centerPos, maxRadius, filter, _frand_trampoline, randomRef, randomPt);
 }

@@ -28,7 +28,7 @@ inline void dtlb_update(
     lb.update(ref, pos, collisionQueryRange, navquery, filter);
 }
 
-inline bool dtlb_isValid(const dtLocalBoundary& lb, dtNavMeshQuery* navquery, const dtQueryFilter* filter) {
+inline bool dtlb_isValid(dtLocalBoundary& lb, dtNavMeshQuery* navquery, const dtQueryFilter* filter) {
     return lb.isValid(navquery, filter);
 }
 
