@@ -38,20 +38,20 @@ impl DtStatus {
             Ok(())
         } else if self.0 & DT_FAILURE != 0 {
             match self.0 & DT_STATUS_DETAIL_MASK {
-                DT_WRONG_MAGIC => return Err(RNError::WrongMagic),
-                DT_WRONG_VERSION => return Err(RNError::WrongVersion),
-                DT_OUT_OF_MEMORY => return Err(RNError::OutOfMemory),
-                DT_INVALID_PARAM => return Err(RNError::InvalidParam),
-                DT_BUFFER_TOO_SMALL => return Err(RNError::BufferTooSmall),
-                DT_OUT_OF_NODES => return Err(RNError::OutOfNodes),
-                DT_PARTIAL_RESULT => return Err(RNError::PartialResult),
-                DT_ALREADY_OCCUPIED => return Err(RNError::AlreadyOccupied),
-                _ => return Err(RNError::Failed),
+                DT_WRONG_MAGIC => Err(RNError::WrongMagic),
+                DT_WRONG_VERSION => Err(RNError::WrongVersion),
+                DT_OUT_OF_MEMORY => Err(RNError::OutOfMemory),
+                DT_INVALID_PARAM => Err(RNError::InvalidParam),
+                DT_BUFFER_TOO_SMALL => Err(RNError::BufferTooSmall),
+                DT_OUT_OF_NODES => Err(RNError::OutOfNodes),
+                DT_PARTIAL_RESULT => Err(RNError::PartialResult),
+                DT_ALREADY_OCCUPIED => Err(RNError::AlreadyOccupied),
+                _ => Err(RNError::Failed),
             }
         } else if self.0 & DT_IN_PROGRESS != 0 {
-            return Err(RNError::InProgress);
+            Err(RNError::InProgress)
         } else {
-            return Err(RNError::Failed);
+            Err(RNError::Failed)
         }
     }
 }
@@ -120,12 +120,12 @@ impl DtBuf {
 
     #[inline]
     pub fn as_slice(&self) -> &[u8] {
-        return unsafe { std::slice::from_raw_parts(self.data, self.size as usize) };
+        unsafe { std::slice::from_raw_parts(self.data, self.size as usize) }
     }
 
     #[inline]
     pub fn as_slice_mut(&mut self) -> &mut [u8] {
-        return unsafe { std::slice::from_raw_parts_mut(self.data, self.size as usize) };
+        unsafe { std::slice::from_raw_parts_mut(self.data, self.size as usize) }
     }
 
     #[inline]

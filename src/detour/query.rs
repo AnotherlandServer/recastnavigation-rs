@@ -407,12 +407,12 @@ impl Default for DtRaycastHit {
 impl DtRaycastHit {
     #[inline]
     pub fn path(&self) -> &[DtPolyRef] {
-        return unsafe { std::slice::from_raw_parts(self.path, self.path_count as usize) };
+        unsafe { std::slice::from_raw_parts(self.path, self.path_count as usize) }
     }
 
     #[inline]
     pub fn path_mut(&mut self) -> &mut [DtPolyRef] {
-        return unsafe { std::slice::from_raw_parts_mut(self.path, self.path_count as usize) };
+        unsafe { std::slice::from_raw_parts_mut(self.path, self.path_count as usize) }
     }
 
     #[inline]
@@ -464,7 +464,7 @@ impl DtNavMeshQuery {
 
     #[inline]
     pub fn init(&mut self, nav: &DtNavMesh, max_nodes: usize) -> RNResult<()> {
-        return unsafe { self.inner_mut().init(nav.as_ptr(), max_nodes as i32) }.to_result();
+        unsafe { self.inner_mut().init(nav.as_ptr(), max_nodes as i32) }.to_result()
     }
 
     #[inline]
@@ -556,7 +556,7 @@ impl DtNavMeshQuery {
         if any_angle {
             options = ffi::dtFindPathOptions::DT_FINDPATH_ANY_ANGLE.repr;
         }
-        return unsafe {
+        unsafe {
             self.inner_mut().initSlicedFindPath(
                 start_ref,
                 end_ref,
@@ -566,7 +566,7 @@ impl DtNavMeshQuery {
                 options,
             )
         }
-        .to_result();
+        .to_result()
     }
 
     pub fn update_sliced_find_path(&mut self, max_iter: usize) -> RNResult<usize> {
@@ -994,12 +994,12 @@ impl DtNavMeshQuery {
 
     #[inline]
     pub fn is_valid_poly_ref(&self, re: DtPolyRef, filter: &DtQueryFilter) -> bool {
-        return unsafe { self.inner().isValidPolyRef(re, filter) };
+        unsafe { self.inner().isValidPolyRef(re, filter) }
     }
 
     #[inline]
     pub fn is_in_closed_list(&self, re: DtPolyRef) -> bool {
-        return unsafe { self.inner().isInClosedList(re) };
+        unsafe { self.inner().isInClosedList(re) }
     }
 
     // pub fn get_node_pool(&self) -> &DtNodePool {

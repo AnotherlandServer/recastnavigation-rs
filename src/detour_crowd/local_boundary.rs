@@ -47,10 +47,10 @@ pub struct DtLocalBoundary(CxxDtLocalBoundary);
 
 impl Debug for CxxDtLocalBoundary {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        return f
+        f
             .debug_tuple("CxxDtLocalBoundary")
             .field(&(self as *const CxxDtLocalBoundary))
-            .finish();
+            .finish()
     }
 }
 
@@ -93,12 +93,12 @@ impl DtLocalBoundary {
 
     #[inline]
     pub fn is_valid(&mut self, navquery: &mut DtNavMeshQuery, filter: &DtQueryFilter) -> bool {
-        return unsafe { ffi::dtlb_isValid(self.inner_mut(), navquery.as_mut_ptr(), filter) };
+        unsafe { ffi::dtlb_isValid(self.inner_mut(), navquery.as_mut_ptr(), filter) }
     }
 
     #[inline]
     pub fn center(&self) -> &[f32; 3] {
-        return unsafe { &*(ffi::dtlb_getCenter(self.inner()) as *const [f32; 3]) };
+        unsafe { &*(ffi::dtlb_getCenter(self.inner()) as *const [f32; 3]) }
     }
 
     #[inline]

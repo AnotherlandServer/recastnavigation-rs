@@ -371,20 +371,20 @@ impl Deref for DtMeshTile {
 
     #[inline]
     fn deref(&self) -> &Self::Target {
-        return self.inner();
+        self.inner()
     }
 }
 
 impl DerefMut for DtMeshTile {
     #[inline]
     fn deref_mut(&mut self) -> &mut Self::Target {
-        return self.inner_mut().get_mut();
+        self.inner_mut().get_mut()
     }
 }
 
 impl Debug for DtMeshTile {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        return self.inner().fmt(f);
+        self.inner().fmt(f)
     }
 }
 
@@ -434,97 +434,97 @@ impl DtMeshTile {
     #[inline]
     pub fn polys(&self) -> &[DtPoly] {
         let poly_count = self.header().map_or(0, |h| h.poly_count as usize);
-        return unsafe { std::slice::from_raw_parts(self.polys, poly_count) };
+        unsafe { std::slice::from_raw_parts(self.polys, poly_count) }
     }
 
     #[inline]
     pub fn polys_mut(&mut self) -> &mut [DtPoly] {
         let poly_count = self.header().map_or(0, |h| h.poly_count as usize);
-        return unsafe { std::slice::from_raw_parts_mut(self.polys, poly_count) };
+        unsafe { std::slice::from_raw_parts_mut(self.polys, poly_count) }
     }
 
     #[inline]
     pub fn verts(&self) -> &[[f32; 3]] {
         let vert_count = self.header().map_or(0, |h| h.vert_count as usize);
-        return unsafe { std::slice::from_raw_parts(self.verts, vert_count) };
+        unsafe { std::slice::from_raw_parts(self.verts, vert_count) }
     }
 
     #[inline]
     pub fn verts_mut(&mut self) -> &mut [[f32; 3]] {
         let vert_count = self.header().map_or(0, |h| h.vert_count as usize);
-        return unsafe { std::slice::from_raw_parts_mut(self.verts, vert_count) };
+        unsafe { std::slice::from_raw_parts_mut(self.verts, vert_count) }
     }
 
     #[inline]
     pub fn links(&self) -> &[DtLink] {
         let link_count = self.header().map_or(0, |h| h.max_link_count as usize);
-        return unsafe { std::slice::from_raw_parts(self.links, link_count) };
+        unsafe { std::slice::from_raw_parts(self.links, link_count) }
     }
 
     #[inline]
     pub fn links_mut(&mut self) -> &mut [DtLink] {
         let link_count = self.header().map_or(0, |h| h.max_link_count as usize);
-        return unsafe { std::slice::from_raw_parts_mut(self.links, link_count) };
+        unsafe { std::slice::from_raw_parts_mut(self.links, link_count) }
     }
 
     #[inline]
     pub fn detail_meshes(&self) -> &[DtPolyDetail] {
         let detail_mesh_count = self.header().map_or(0, |h| h.detail_mesh_count as usize);
-        return unsafe { std::slice::from_raw_parts(self.detail_meshes, detail_mesh_count) };
+        unsafe { std::slice::from_raw_parts(self.detail_meshes, detail_mesh_count) }
     }
 
     #[inline]
     pub fn detail_meshes_mut(&mut self) -> &mut [DtPolyDetail] {
         let detail_mesh_count = self.header().map_or(0, |h| h.detail_mesh_count as usize);
-        return unsafe { std::slice::from_raw_parts_mut(self.detail_meshes, detail_mesh_count) };
+        unsafe { std::slice::from_raw_parts_mut(self.detail_meshes, detail_mesh_count) }
     }
 
     #[inline]
     pub fn detail_verts(&self) -> &[[f32; 3]] {
         let detail_vert_count = self.header().map_or(0, |h| h.detail_vert_count as usize);
-        return unsafe { std::slice::from_raw_parts(self.detail_verts, detail_vert_count) };
+        unsafe { std::slice::from_raw_parts(self.detail_verts, detail_vert_count) }
     }
 
     #[inline]
     pub fn detail_verts_mut(&mut self) -> &mut [[f32; 3]] {
         let detail_vert_count = self.header().map_or(0, |h| h.detail_vert_count as usize);
-        return unsafe { std::slice::from_raw_parts_mut(self.detail_verts, detail_vert_count) };
+        unsafe { std::slice::from_raw_parts_mut(self.detail_verts, detail_vert_count) }
     }
 
     #[inline]
     pub fn detail_tris(&self) -> &[[u8; 4]] {
         let detail_tri_count = self.header().map_or(0, |h| h.detail_tri_count as usize);
-        return unsafe { std::slice::from_raw_parts(self.detail_tris, detail_tri_count) };
+        unsafe { std::slice::from_raw_parts(self.detail_tris, detail_tri_count) }
     }
 
     #[inline]
     pub fn detail_tris_mut(&mut self) -> &mut [[u8; 4]] {
         let detail_tri_count = self.header().map_or(0, |h| h.detail_tri_count as usize);
-        return unsafe { std::slice::from_raw_parts_mut(self.detail_tris, detail_tri_count) };
+        unsafe { std::slice::from_raw_parts_mut(self.detail_tris, detail_tri_count) }
     }
 
     #[inline]
     pub fn bv_tree(&self) -> &[DtBVNode] {
         let bv_node_count = self.header().map_or(0, |h| h.bv_node_count as usize);
-        return unsafe { std::slice::from_raw_parts(self.bv_tree, bv_node_count) };
+        unsafe { std::slice::from_raw_parts(self.bv_tree, bv_node_count) }
     }
 
     #[inline]
     pub fn bv_tree_mut(&mut self) -> &mut [DtBVNode] {
         let bv_node_count = self.header().map_or(0, |h| h.bv_node_count as usize);
-        return unsafe { std::slice::from_raw_parts_mut(self.bv_tree, bv_node_count) };
+        unsafe { std::slice::from_raw_parts_mut(self.bv_tree, bv_node_count) }
     }
 
     #[inline]
     pub fn off_mesh_cons(&self) -> &[DtOffMeshConnection] {
         let off_mesh_con_count = self.header().map_or(0, |h| h.off_mesh_con_count as usize);
-        return unsafe { std::slice::from_raw_parts(self.off_mesh_cons, off_mesh_con_count) };
+        unsafe { std::slice::from_raw_parts(self.off_mesh_cons, off_mesh_con_count) }
     }
 
     #[inline]
     pub fn off_mesh_cons_mut(&mut self) -> &mut [DtOffMeshConnection] {
         let off_mesh_con_count = self.header().map_or(0, |h| h.off_mesh_con_count as usize);
-        return unsafe { std::slice::from_raw_parts_mut(self.off_mesh_cons, off_mesh_con_count) };
+        unsafe { std::slice::from_raw_parts_mut(self.off_mesh_cons, off_mesh_con_count) }
     }
 
     #[inline]
@@ -532,7 +532,7 @@ impl DtMeshTile {
         if self.data.is_null() {
             return &[];
         }
-        return unsafe { std::slice::from_raw_parts(self.data, self.data_size()) };
+        unsafe { std::slice::from_raw_parts(self.data, self.data_size()) }
     }
 
     #[inline]
@@ -540,7 +540,7 @@ impl DtMeshTile {
         if self.data.is_null() {
             return &mut [];
         }
-        return unsafe { std::slice::from_raw_parts_mut(self.data, self.data_size()) };
+        unsafe { std::slice::from_raw_parts_mut(self.data, self.data_size()) }
     }
 
     #[inline]
@@ -617,6 +617,7 @@ impl DtNavMesh {
     }
 
     #[inline]
+    #[allow(dead_code)]
     pub(crate) unsafe fn from_ptr(ptr: *mut ffi::dtNavMesh) -> DtNavMesh {
         DtNavMesh(ptr)
     }
@@ -662,7 +663,7 @@ impl DtNavMesh {
 
     #[inline]
     pub fn params(&self) -> &DtNavMeshParams {
-        return unsafe { &*self.inner().getParams() };
+        unsafe { &*self.inner().getParams() }
     }
 
     #[inline]
@@ -679,7 +680,7 @@ impl DtNavMesh {
 
     #[inline]
     pub fn remove_tile(&mut self, re: DtTileRef) -> RNResult<()> {
-        return unsafe { self.inner_mut().removeTile(re, ptr::null_mut(), ptr::null_mut()) }.to_result();
+        unsafe { self.inner_mut().removeTile(re, ptr::null_mut(), ptr::null_mut()) }.to_result()
     }
 
     #[inline]
@@ -709,12 +710,12 @@ impl DtNavMesh {
 
     #[inline]
     pub fn get_tile_ref_at(&self, x: i32, y: i32, layer: i32) -> DtTileRef {
-        return self.inner().getTileRefAt(x, y, layer);
+        self.inner().getTileRefAt(x, y, layer)
     }
 
     #[inline]
     pub fn get_tile_ref(&self, tile: &DtMeshTile) -> DtTileRef {
-        return unsafe { self.inner().getTileRef(tile.inner()) };
+        unsafe { self.inner().getTileRef(tile.inner()) }
     }
 
     #[inline]
@@ -728,7 +729,7 @@ impl DtNavMesh {
 
     #[inline]
     pub fn max_tiles(&self) -> i32 {
-        return self.inner().getMaxTiles();
+        self.inner().getMaxTiles()
     }
 
     #[inline]
@@ -784,12 +785,12 @@ impl DtNavMesh {
 
     #[inline]
     pub fn get_off_mesh_connection_by_ref(&self, re: DtPolyRef) -> &DtOffMeshConnection {
-        return unsafe { &*self.inner().getOffMeshConnectionByRef(re) };
+        unsafe { &*self.inner().getOffMeshConnectionByRef(re) }
     }
 
     #[inline]
     pub fn set_poly_flags(&mut self, re: DtPolyRef, flags: u16) -> RNResult<()> {
-        return self.inner_mut().setPolyFlags(re, flags).to_result();
+        self.inner_mut().setPolyFlags(re, flags).to_result()
     }
 
     #[inline]
@@ -801,7 +802,7 @@ impl DtNavMesh {
 
     #[inline]
     pub fn set_poly_area(&mut self, re: DtPolyRef, area: u8) -> RNResult<()> {
-        return self.inner_mut().setPolyArea(re, area).to_result();
+        self.inner_mut().setPolyArea(re, area).to_result()
     }
 
     #[inline]
@@ -813,23 +814,23 @@ impl DtNavMesh {
 
     #[inline]
     pub unsafe fn get_tile_state_size(&self, tile: &DtMeshTile) -> usize {
-        return self.inner().getTileStateSize(tile.inner()) as usize;
+        self.inner().getTileStateSize(tile.inner()) as usize
     }
 
     #[inline]
     pub unsafe fn store_tile_state(&self, re: DtTileRef, data: &mut [u8]) -> RNResult<()> {
-        return unsafe { ffi::dtmt_storeTileState(self.inner(), re, data.as_mut_ptr(), data.len() as i32) }.to_result();
+        unsafe { ffi::dtmt_storeTileState(self.inner(), re, data.as_mut_ptr(), data.len() as i32) }.to_result()
     }
 
     #[inline]
     pub unsafe fn restore_tile_state(&mut self, re: DtTileRef, data: &[u8]) -> RNResult<()> {
-        return unsafe { ffi::dtmt_restoreTileState(self.inner_mut(), re, data.as_ptr(), data.len() as i32) }
-            .to_result();
+        unsafe { ffi::dtmt_restoreTileState(self.inner_mut(), re, data.as_ptr(), data.len() as i32) }
+            .to_result()
     }
 
     #[inline]
     pub fn encode_poly_id(&self, salt: u32, it: u32, ip: u32) -> DtPolyRef {
-        return self.inner().encodePolyId(salt, it, ip);
+        self.inner().encodePolyId(salt, it, ip)
     }
 
     #[inline]
@@ -843,16 +844,16 @@ impl DtNavMesh {
 
     #[inline]
     pub fn decode_poly_id_salt(&self, re: DtPolyRef) -> u32 {
-        return self.inner().decodePolyIdSalt(re);
+        self.inner().decodePolyIdSalt(re)
     }
 
     #[inline]
     pub fn decode_poly_id_tile(&self, re: DtPolyRef) -> u32 {
-        return self.inner().decodePolyIdTile(re);
+        self.inner().decodePolyIdTile(re)
     }
 
     #[inline]
     pub fn decode_poly_id_poly(&self, re: DtPolyRef) -> u32 {
-        return self.inner().decodePolyIdPoly(re);
+        self.inner().decodePolyIdPoly(re)
     }
 }

@@ -366,10 +366,10 @@ pub struct RcContext(UniquePtr<ffi::rcContext>);
 
 impl Debug for RcContext {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        return f
+        f
             .debug_tuple("RcContext")
             .field(&unsafe { mem::transmute_copy::<_, *const ffi::rcContext>(&self.0) })
-            .finish();
+            .finish()
     }
 }
 
@@ -565,13 +565,13 @@ impl RcSpan {
 
 impl Debug for RcSpan {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        return f
+        f
             .debug_struct("RcSpan")
             .field("smin", &self.smin())
             .field("smax", &self.smax())
             .field("area", &self.area())
             .field("next", &self.next())
-            .finish();
+            .finish()
     }
 }
 
@@ -633,14 +633,14 @@ impl Deref for RcHeightfield {
 
     #[inline]
     fn deref(&self) -> &Self::Target {
-        return self.inner();
+        self.inner()
     }
 }
 
 impl DerefMut for RcHeightfield {
     #[inline]
     fn deref_mut(&mut self) -> &mut Self::Target {
-        return self.inner_mut().get_mut();
+        self.inner_mut().get_mut()
     }
 }
 
@@ -719,7 +719,7 @@ impl RcHeightfield {
 
 impl Debug for RcHeightfield {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        return self.inner().fmt(f);
+        self.inner().fmt(f)
     }
 }
 
@@ -768,11 +768,11 @@ impl RcCompactCell {
 
 impl Debug for RcCompactCell {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        return f
+        f
             .debug_struct("RcCompactCell")
             .field("index", &self.index())
             .field("count", &self.count())
-            .finish();
+            .finish()
     }
 }
 
@@ -823,13 +823,13 @@ impl RcCompactSpan {
 
 impl Debug for RcCompactSpan {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        return f
+        f
             .debug_struct("RcCompactSpan")
             .field("y", &self.y)
             .field("reg", &self.reg)
             .field("con", &self.con())
             .field("h", &self.h())
-            .finish();
+            .finish()
     }
 }
 
@@ -876,14 +876,14 @@ impl Deref for RcCompactHeightfield {
 
     #[inline]
     fn deref(&self) -> &Self::Target {
-        return self.inner();
+        self.inner()
     }
 }
 
 impl DerefMut for RcCompactHeightfield {
     #[inline]
     fn deref_mut(&mut self) -> &mut Self::Target {
-        return self.inner_mut().get_mut();
+        self.inner_mut().get_mut()
     }
 }
 
@@ -942,22 +942,22 @@ impl RcCompactHeightfield {
 
     #[inline]
     pub fn cells(&self) -> &[RcCompactCell] {
-        return unsafe { slice::from_raw_parts(self.cells, (self.width() * self.height()) as usize) };
+        unsafe { slice::from_raw_parts(self.cells, (self.width() * self.height()) as usize) }
     }
 
     #[inline]
     pub fn cells_mut(&mut self) -> &mut [RcCompactCell] {
-        return unsafe { slice::from_raw_parts_mut(self.cells, (self.width() * self.height()) as usize) };
+        unsafe { slice::from_raw_parts_mut(self.cells, (self.width() * self.height()) as usize) }
     }
 
     #[inline]
     pub fn spans(&self) -> &[RcCompactSpan] {
-        return unsafe { slice::from_raw_parts(self.spans, self.span_count()) };
+        unsafe { slice::from_raw_parts(self.spans, self.span_count()) }
     }
 
     #[inline]
     pub fn spans_mut(&mut self) -> &mut [RcCompactSpan] {
-        return unsafe { slice::from_raw_parts_mut(self.spans, self.span_count()) };
+        unsafe { slice::from_raw_parts_mut(self.spans, self.span_count()) }
     }
 
     #[inline]
@@ -967,7 +967,7 @@ impl RcCompactHeightfield {
         if dist_ptr.is_null() {
             dist_len = 0;
         }
-        return unsafe { slice::from_raw_parts(dist_ptr, dist_len) };
+        unsafe { slice::from_raw_parts(dist_ptr, dist_len) }
     }
 
     #[inline]
@@ -977,23 +977,23 @@ impl RcCompactHeightfield {
         if dist_ptr.is_null() {
             dist_len = 0;
         }
-        return unsafe { slice::from_raw_parts_mut(dist_ptr, dist_len) };
+        unsafe { slice::from_raw_parts_mut(dist_ptr, dist_len) }
     }
 
     #[inline]
     pub fn areas(&self) -> &[u8] {
-        return unsafe { slice::from_raw_parts(self.areas, self.span_count()) };
+        unsafe { slice::from_raw_parts(self.areas, self.span_count()) }
     }
 
     #[inline]
     pub fn areas_mut(&mut self) -> &mut [u8] {
-        return unsafe { slice::from_raw_parts_mut(self.areas, self.span_count()) };
+        unsafe { slice::from_raw_parts_mut(self.areas, self.span_count()) }
     }
 }
 
 impl Debug for RcCompactHeightfield {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        return self.inner().fmt(f);
+        self.inner().fmt(f)
     }
 }
 
@@ -1045,32 +1045,32 @@ impl RcHeightfieldLayer {
 
     #[inline]
     pub fn heights(&self) -> &[u8] {
-        return unsafe { slice::from_raw_parts(self.heights, (self.width * self.height) as usize) };
+        unsafe { slice::from_raw_parts(self.heights, (self.width * self.height) as usize) }
     }
 
     #[inline]
     pub fn heights_mut(&mut self) -> &mut [u8] {
-        return unsafe { slice::from_raw_parts_mut(self.heights, (self.width * self.height) as usize) };
+        unsafe { slice::from_raw_parts_mut(self.heights, (self.width * self.height) as usize) }
     }
 
     #[inline]
     pub fn areas(&self) -> &[u8] {
-        return unsafe { slice::from_raw_parts(self.areas, self.height as usize) };
+        unsafe { slice::from_raw_parts(self.areas, self.height as usize) }
     }
 
     #[inline]
     pub fn areas_mut(&mut self) -> &mut [u8] {
-        return unsafe { slice::from_raw_parts_mut(self.areas, self.height as usize) };
+        unsafe { slice::from_raw_parts_mut(self.areas, self.height as usize) }
     }
 
     #[inline]
     pub fn cons(&self) -> &[u8] {
-        return unsafe { slice::from_raw_parts(self.cons, self.height as usize) };
+        unsafe { slice::from_raw_parts(self.cons, self.height as usize) }
     }
 
     #[inline]
     pub fn cons_mut(&mut self) -> &mut [u8] {
-        return unsafe { slice::from_raw_parts_mut(self.cons, self.height as usize) };
+        unsafe { slice::from_raw_parts_mut(self.cons, self.height as usize) }
     }
 }
 
@@ -1103,14 +1103,14 @@ impl Deref for RcHeightfieldLayerSet {
 
     #[inline]
     fn deref(&self) -> &Self::Target {
-        return self.inner();
+        self.inner()
     }
 }
 
 impl DerefMut for RcHeightfieldLayerSet {
     #[inline]
     fn deref_mut(&mut self) -> &mut Self::Target {
-        return self.inner_mut().get_mut();
+        self.inner_mut().get_mut()
     }
 }
 
@@ -1154,23 +1154,23 @@ impl RcHeightfieldLayerSet {
 
     #[inline]
     pub fn layers(&self) -> &[RcHeightfieldLayer] {
-        return unsafe { slice::from_raw_parts(self.layers, self.nlayers()) };
+        unsafe { slice::from_raw_parts(self.layers, self.nlayers()) }
     }
 
     #[inline]
     pub fn layers_mut(&mut self) -> &mut [RcHeightfieldLayer] {
-        return unsafe { slice::from_raw_parts_mut(self.layers, self.nlayers()) };
+        unsafe { slice::from_raw_parts_mut(self.layers, self.nlayers()) }
     }
 
     #[inline]
     pub fn nlayers(&self) -> usize {
-        return self.inner().nlayers as usize;
+        self.inner().nlayers as usize
     }
 }
 
 impl Debug for RcHeightfieldLayerSet {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        return self.inner().fmt(f);
+        self.inner().fmt(f)
     }
 }
 
@@ -1208,12 +1208,12 @@ impl RcContour {
 
     #[inline]
     pub fn verts(&self) -> &[[i32; 4]] {
-        return unsafe { slice::from_raw_parts(self.verts, self.nverts()) };
+        unsafe { slice::from_raw_parts(self.verts, self.nverts()) }
     }
 
     #[inline]
     pub fn verts_mut(&mut self) -> &mut [[i32; 4]] {
-        return unsafe { slice::from_raw_parts_mut(self.verts, self.nverts()) };
+        unsafe { slice::from_raw_parts_mut(self.verts, self.nverts()) }
     }
 
     #[inline]
@@ -1223,12 +1223,12 @@ impl RcContour {
 
     #[inline]
     pub fn rverts(&self) -> &[[i32; 4]] {
-        return unsafe { slice::from_raw_parts(self.rverts, self.nrverts()) };
+        unsafe { slice::from_raw_parts(self.rverts, self.nrverts()) }
     }
 
     #[inline]
     pub fn rverts_mut(&mut self) -> &mut [[i32; 4]] {
-        return unsafe { slice::from_raw_parts_mut(self.rverts, self.nrverts()) };
+        unsafe { slice::from_raw_parts_mut(self.rverts, self.nrverts()) }
     }
 }
 
@@ -1269,14 +1269,14 @@ impl Deref for RcContourSet {
 
     #[inline]
     fn deref(&self) -> &Self::Target {
-        return self.inner();
+        self.inner()
     }
 }
 
 impl DerefMut for RcContourSet {
     #[inline]
     fn deref_mut(&mut self) -> &mut Self::Target {
-        return self.inner_mut().get_mut();
+        self.inner_mut().get_mut()
     }
 }
 
@@ -1320,23 +1320,23 @@ impl RcContourSet {
 
     #[inline]
     pub fn conts(&self) -> &[RcContour] {
-        return unsafe { slice::from_raw_parts(self.inner().conts, self.nconts()) };
+        unsafe { slice::from_raw_parts(self.inner().conts, self.nconts()) }
     }
 
     #[inline]
     pub fn conts_mut(&mut self) -> &mut [RcContour] {
-        return unsafe { slice::from_raw_parts_mut(self.inner_mut().conts, self.nconts()) };
+        unsafe { slice::from_raw_parts_mut(self.inner_mut().conts, self.nconts()) }
     }
 
     #[inline]
     pub fn nconts(&self) -> usize {
-        return self.inner().nconts as usize;
+        self.inner().nconts as usize
     }
 }
 
 impl Debug for RcContourSet {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        return self.inner().fmt(f);
+        self.inner().fmt(f)
     }
 }
 
@@ -1382,14 +1382,14 @@ impl Deref for RcPolyMesh {
 
     #[inline]
     fn deref(&self) -> &Self::Target {
-        return self.inner();
+        self.inner()
     }
 }
 
 impl DerefMut for RcPolyMesh {
     #[inline]
     fn deref_mut(&mut self) -> &mut Self::Target {
-        return self.inner_mut().get_mut();
+        self.inner_mut().get_mut()
     }
 }
 
@@ -1433,52 +1433,52 @@ impl RcPolyMesh {
 
     #[inline]
     pub fn verts(&self) -> &[[u16; 3]] {
-        return unsafe { slice::from_raw_parts(self.verts, self.nverts()) };
+        unsafe { slice::from_raw_parts(self.verts, self.nverts()) }
     }
 
     #[inline]
     pub fn verts_mut(&mut self) -> &mut [[u16; 3]] {
-        return unsafe { slice::from_raw_parts_mut(self.verts, self.nverts()) };
+        unsafe { slice::from_raw_parts_mut(self.verts, self.nverts()) }
     }
 
     #[inline]
     pub fn polys(&self) -> &[u16] {
-        return unsafe { slice::from_raw_parts(self.polys, self.npolys() * 2 * self.nvp()) };
+        unsafe { slice::from_raw_parts(self.polys, self.npolys() * 2 * self.nvp()) }
     }
 
     #[inline]
     pub fn polys_mut(&mut self) -> &mut [u16] {
-        return unsafe { slice::from_raw_parts_mut(self.polys, self.npolys() * 2 * self.nvp()) };
+        unsafe { slice::from_raw_parts_mut(self.polys, self.npolys() * 2 * self.nvp()) }
     }
 
     #[inline]
     pub fn regs(&self) -> &[u16] {
-        return unsafe { slice::from_raw_parts(self.regs, self.npolys()) };
+        unsafe { slice::from_raw_parts(self.regs, self.npolys()) }
     }
 
     #[inline]
     pub fn regs_mut(&mut self) -> &mut [u16] {
-        return unsafe { slice::from_raw_parts_mut(self.regs, self.npolys()) };
+        unsafe { slice::from_raw_parts_mut(self.regs, self.npolys()) }
     }
 
     #[inline]
     pub fn flags(&self) -> &[u16] {
-        return unsafe { slice::from_raw_parts(self.flags, self.npolys()) };
+        unsafe { slice::from_raw_parts(self.flags, self.npolys()) }
     }
 
     #[inline]
     pub fn flags_mut(&mut self) -> &mut [u16] {
-        return unsafe { slice::from_raw_parts_mut(self.flags, self.npolys()) };
+        unsafe { slice::from_raw_parts_mut(self.flags, self.npolys()) }
     }
 
     #[inline]
     pub fn areas(&self) -> &[u8] {
-        return unsafe { slice::from_raw_parts(self.areas, self.npolys()) };
+        unsafe { slice::from_raw_parts(self.areas, self.npolys()) }
     }
 
     #[inline]
     pub fn areas_mut(&mut self) -> &mut [u8] {
-        return unsafe { slice::from_raw_parts_mut(self.areas, self.npolys()) };
+        unsafe { slice::from_raw_parts_mut(self.areas, self.npolys()) }
     }
 
     #[inline]
@@ -1504,7 +1504,7 @@ impl RcPolyMesh {
 
 impl Debug for RcPolyMesh {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        return self.inner().fmt(f);
+        self.inner().fmt(f)
     }
 }
 
@@ -1541,14 +1541,14 @@ impl Deref for RcPolyMeshDetail {
 
     #[inline]
     fn deref(&self) -> &Self::Target {
-        return self.inner();
+        self.inner()
     }
 }
 
 impl DerefMut for RcPolyMeshDetail {
     #[inline]
     fn deref_mut(&mut self) -> &mut Self::Target {
-        return self.inner_mut().get_mut();
+        self.inner_mut().get_mut()
     }
 }
 
@@ -1592,32 +1592,32 @@ impl RcPolyMeshDetail {
 
     #[inline]
     pub fn meshes(&self) -> &[[u32; 4]] {
-        return unsafe { slice::from_raw_parts(self.meshes, self.nmeshes()) };
+        unsafe { slice::from_raw_parts(self.meshes, self.nmeshes()) }
     }
 
     #[inline]
     pub fn meshes_mut(&mut self) -> &mut [[u32; 4]] {
-        return unsafe { slice::from_raw_parts_mut(self.meshes, self.nmeshes()) };
+        unsafe { slice::from_raw_parts_mut(self.meshes, self.nmeshes()) }
     }
 
     #[inline]
     pub fn verts(&self) -> &[[f32; 3]] {
-        return unsafe { slice::from_raw_parts(self.verts, self.nverts()) };
+        unsafe { slice::from_raw_parts(self.verts, self.nverts()) }
     }
 
     #[inline]
     pub fn verts_mut(&mut self) -> &mut [[f32; 3]] {
-        return unsafe { slice::from_raw_parts_mut(self.verts, self.nverts()) };
+        unsafe { slice::from_raw_parts_mut(self.verts, self.nverts()) }
     }
 
     #[inline]
     pub fn tris(&self) -> &[[u8; 4]] {
-        return unsafe { slice::from_raw_parts(self.tris, self.ntris()) };
+        unsafe { slice::from_raw_parts(self.tris, self.ntris()) }
     }
 
     #[inline]
     pub fn tris_mut(&mut self) -> &mut [[u8; 4]] {
-        return unsafe { slice::from_raw_parts_mut(self.tris, self.ntris()) };
+        unsafe { slice::from_raw_parts_mut(self.tris, self.ntris()) }
     }
 
     #[inline]
@@ -1638,7 +1638,7 @@ impl RcPolyMeshDetail {
 
 impl Debug for RcPolyMeshDetail {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        return self.inner().fmt(f);
+        self.inner().fmt(f)
     }
 }
 
@@ -1943,7 +1943,7 @@ pub fn rc_filter_walkable_low_height_spans(
 #[inline]
 pub fn rc_get_height_field_span_count(context: &mut RcContext, heightfield: &RcHeightfield) -> i32 {
     unsafe {
-        return ffi::rcGetHeightFieldSpanCount(context.0.pin_mut().get_unchecked_mut() as *mut _, heightfield.inner());
+        ffi::rcGetHeightFieldSpanCount(context.0.pin_mut().get_unchecked_mut() as *mut _, heightfield.inner())
     }
 }
 

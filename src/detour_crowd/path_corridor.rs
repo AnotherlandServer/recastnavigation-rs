@@ -115,16 +115,16 @@ pub struct DtPathCorridor(CxxDtPathCorridor);
 
 impl Default for DtPathCorridor {
     fn default() -> Self {
-        return DtPathCorridor(CxxDtPathCorridor([0; 40]));
+        DtPathCorridor(CxxDtPathCorridor([0; 40]))
     }
 }
 
 impl Debug for DtPathCorridor {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        return f
+        f
             .debug_tuple("DtPathCorridor")
             .field(&(self as *const DtPathCorridor))
-            .finish();
+            .finish()
     }
 }
 
@@ -141,7 +141,7 @@ impl DtPathCorridor {
 
     #[inline]
     pub fn init(&mut self, max_path: i32) -> bool {
-        return self.inner_mut().init(max_path);
+        self.inner_mut().init(max_path)
     }
 
     #[inline]
@@ -162,7 +162,7 @@ impl DtPathCorridor {
             .into_iter()
             .min()
             .unwrap_or(0);
-        return unsafe {
+        unsafe {
             self.inner_mut().findCorners(
                 corner_verts.as_mut_ptr() as *mut f32,
                 corner_flags.as_mut_ptr(),
@@ -171,7 +171,7 @@ impl DtPathCorridor {
                 navquery.as_mut_ptr(),
                 filter,
             )
-        };
+        }
     }
 
     #[inline]
@@ -194,7 +194,7 @@ impl DtPathCorridor {
 
     #[inline]
     pub fn optimize_path_topology(&mut self, navquery: &mut DtNavMeshQuery, filter: &DtQueryFilter) -> bool {
-        return unsafe { self.inner_mut().optimizePathTopology(navquery.as_mut_ptr(), filter) };
+        unsafe { self.inner_mut().optimizePathTopology(navquery.as_mut_ptr(), filter) }
     }
 
     #[inline]
@@ -206,7 +206,7 @@ impl DtPathCorridor {
         end_pos: &mut [f32; 3],
         navquery: &mut DtNavMeshQuery,
     ) -> bool {
-        return unsafe {
+        unsafe {
             self.inner_mut().moveOverOffmeshConnection(
                 off_mesh_con_ref,
                 res,
@@ -214,12 +214,12 @@ impl DtPathCorridor {
                 end_pos.as_mut_ptr(),
                 navquery.as_mut_ptr(),
             )
-        };
+        }
     }
 
     #[inline]
     pub fn fix_path_start(&mut self, safe_ref: DtPolyRef, safe_pos: &[f32; 3]) -> bool {
-        return unsafe { self.inner_mut().fixPathStart(safe_ref, safe_pos.as_ptr()) };
+        unsafe { self.inner_mut().fixPathStart(safe_ref, safe_pos.as_ptr()) }
     }
 
     #[inline]
@@ -230,23 +230,23 @@ impl DtPathCorridor {
         navquery: &mut DtNavMeshQuery,
         filter: &DtQueryFilter,
     ) -> bool {
-        return unsafe {
+        unsafe {
             self.inner_mut()
                 .trimInvalidPath(safe_ref, safe_pos.as_ptr(), navquery.as_mut_ptr(), filter)
-        };
+        }
     }
 
     #[inline]
     pub fn is_valid(&mut self, max_look_ahead: i32, navquery: &mut DtNavMeshQuery, filter: &DtQueryFilter) -> bool {
-        return unsafe { self.inner_mut().isValid(max_look_ahead, navquery.as_mut_ptr(), filter) };
+        unsafe { self.inner_mut().isValid(max_look_ahead, navquery.as_mut_ptr(), filter) }
     }
 
     #[inline]
     pub fn move_position(&mut self, npos: &[f32; 3], navquery: &mut DtNavMeshQuery, filter: &DtQueryFilter) -> bool {
-        return unsafe {
+        unsafe {
             self.inner_mut()
                 .movePosition(npos.as_ptr(), navquery.as_mut_ptr(), filter)
-        };
+        }
     }
 
     #[inline]
@@ -256,10 +256,10 @@ impl DtPathCorridor {
         navquery: &mut DtNavMeshQuery,
         filter: &DtQueryFilter,
     ) -> bool {
-        return unsafe {
+        unsafe {
             self.inner_mut()
                 .moveTargetPosition(npos.as_ptr(), navquery.as_mut_ptr(), filter)
-        };
+        }
     }
 
     #[inline]
@@ -269,27 +269,27 @@ impl DtPathCorridor {
 
     #[inline]
     pub fn pos(&self) -> &[f32; 3] {
-        return unsafe { &*(self.inner().getPos() as *const [f32; 3]) };
+        unsafe { &*(self.inner().getPos() as *const [f32; 3]) }
     }
 
     #[inline]
     pub fn target(&self) -> &[f32; 3] {
-        return unsafe { &*(self.inner().getTarget() as *const [f32; 3]) };
+        unsafe { &*(self.inner().getTarget() as *const [f32; 3]) }
     }
 
     #[inline]
     pub fn first_poly(&self) -> DtPolyRef {
-        return self.inner().getFirstPoly();
+        self.inner().getFirstPoly()
     }
 
     #[inline]
     pub fn last_poly(&self) -> DtPolyRef {
-        return self.inner().getLastPoly();
+        self.inner().getLastPoly()
     }
 
     #[inline]
     pub fn path(&self) -> &[DtPolyRef] {
-        return unsafe { std::slice::from_raw_parts(self.inner().getPath(), self.inner().getPathCount() as usize) };
+        unsafe { std::slice::from_raw_parts(self.inner().getPath(), self.inner().getPathCount() as usize) }
     }
 }
 
